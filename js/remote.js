@@ -839,7 +839,7 @@ function setMediaInfo(response) {
 		$(".movie-detail-rating").html("" + response.result.rating + "/10");
 		$(".movie-detail-synopsis").html("<p>" + response.result.synopsis + "</p>");
 		$(".movie-detail-genre").html("" + response.result.genre + "");
-		$(".movie-detail-runtime").html("" + response.result.runtime + " min");
+		$(".movie-detail-runtime").html("" + response.result.runtime + " perc");
 		$(".movie-detail-imdblink").html('<a href="http://imdb.com/title/' + response.result.imdb_id + '/" target="_blank"><img src="img/imdb.png"></a>');
 		return true;
 	}
@@ -847,9 +847,9 @@ function setMediaInfo(response) {
 		$(".show-info-title").html("" + response.result.title + "");
 		$(".show-info-year").html("" + response.result.year + " - " + response.result.status + "");
 		$(".show-info-rating").html("" + parseFloat(response.result.rating.percentage) / 10 + "/10");
-		$(".show-info-seasons").html("" + response.result.num_seasons + " seasons");
+		$(".show-info-seasons").html("" + response.result.num_seasons + " évad");
 		$(".show-info-genre").html("" + response.result.genres[0] + "");
-		$(".show-info-runtime").html("" + response.result.runtime + "min");
+		$(".show-info-runtime").html("" + response.result.runtime + " perc");
 		$(".show-info-imdb").html('<a href="http://imdb.com/title/' + response.result.imdb_id + '/" target="_blank"><img src="img/imdb.png"></a>');
 		$(".show-info-poster").attr("src", "" + response.result.images.poster + "");
 		$(".show-info").attr("style", "background-image: url(" + response.result.images.fanart + ");");
