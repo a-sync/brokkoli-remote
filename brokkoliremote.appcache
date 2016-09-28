@@ -1,0 +1,24 @@
+CACHE MANIFEST
+# v2.1.0 #
+
+index.html
+manifest.json
+css/bootstrap.min.css
+css/font-awesome.min.css
+css/styles.css
+fonts/fontawesome-webfont.eot
+fonts/FontAwesome.otf
+fonts/fontawesome-webfont.svg
+fonts/fontawesome-webfont.ttf
+fonts/fontawesome-webfont.woff
+fonts/fontawesome-webfont.woff2
+img/icon.png
+img/icon-128x128.png
+img/imdb.png
+js/bootstrap.min.js
+js/jquery.min.js
+js/remote.js
+js/langcodes.json
+
+NETWORK:
+*

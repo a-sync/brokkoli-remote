@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<!--//
+Brokkoli Remote v2.1.0.alpha
+//-->
+<html lang="hu" manifest="brokkoliremote.appcache">
+<head>
+    <meta charset="utf-8">
+    <title>Brokkoli Remote</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <link rel="icon" href="img/icon.png">
+    <link rel="shortcut" href="img/icon.png">
+
+    <!--// Webapp (Apple) tags //-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Brokkoli Remote">
+    <link rel="apple-touch-icon" href="img/icon.png">
+
+    <!--// Webapp (Android) tags //-->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!--// Windows 8.1 Tile tags //-->
+    <meta name="application-name" content="Brokkoli Remote">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="msapplication-TileImage" content="img/icon.png">
+
+    <meta name="language" content="hu">
+    <link rel="manifest" href="manifest.json">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+    <!--// SECTION:NOSCRIPT //-->
+    <noscript>
+    <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
+      <h2>Engedélyezd a Javascript-et</h2>
+      <p>
+        A Brokkoli Remote Javascript nélkül nem működik. :(
+      </p>
+    </div>
+    </noscript>
+
+    <!--// SECTION:MENU //-->
+    <div class="menu" style="display: none;">
+    <div class="nav-title">Brokkoli Remote</div>
+    <ul class="nav nav-hor pull-left">
+      <li class="btn-movies">Filmek</li>
+      <li class="btn-shows">Sorozatok</li>
+      <li class="btn-anime">Anime</li>
+    </ul>
+    <ul class="nav nav-hor nav-icons pull-right">
+      <li class="btn-inbox"><i class="btn-inbox-icon fa fa-inbox"></i></li> 
+      <li class="btn-favourites"><i class="btn-favourites-icon fa fa-heart"></i></li> 
+      <li class="btn-settings"><i class="btn-settings-icon fa fa-cog"></i></li>
+    </ul>
+    </div>
+    <div id="contents">
+
+    <!--// SECTION:DEFAULT //-->
+    <div id="default" class="hidden">
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+          <h2>Kapcsolódás...</h2>
+          <p><span class="btn-settings"><i class="btn-settings-icon fa fa-cog"></i> Beállítások</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!--// SECTION:MAIN-BROWSER //-->
+    <div id="main-browser" class="sections hidden">
+      <!--// Search & Filter options //-->
+      <div class="subsection-search-filter hidden">
+        <div class="form-inline">
+          Műfaj <select id="select-filter-genre" class="form-control"></select> 
+          Rendezés <select id="select-filter-sort" class="form-control"></select> 
+          <br/>
+          <input id="input-search" class="form-control" type="text" name="search" value="" placeholder="Keresés">
+          <div class="btn-enter-search pull-right hidden"><i class="fa fa-search"></i></div>
+          <div class="btn-clear-search pull-right hidden"><i class="fa fa-close"></i></div>
+        </div>
+      </div>
+      <!--// Arrows //-->
+      <div class="subsection-arrows">
+        <center>
+          <div class="btn-remote-circle">
+            <div class="btn-enter"></div>
+            <div class="btn-arrow-up">
+              <i class="fa fa-chevron-up"></i>
+            </div>
+            <div class="btn-arrow-left pull-left">
+              <i class="fa fa-chevron-left"></i>
+            </div>
+            <div class="btn-arrow-right pull-right">
+              <i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="btn-arrow-down">
+              <i class="fa fa-chevron-down"></i>
+            </div>
+          </div>
+        </center>
+      </div>
+      <!--// Favourites & seen toggle //-->
+      <div class="subsection-favs-seen">
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="btn-seen"><i class="fa fa-eye"></i></div>
+          </div>
+          <div class="col-xs-6">
+            <div class="btn-favourite"><i class="fa fa-heart"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--// SECTION:SHOWS-CONTAINER //-->
+    <div id="shows-container" class="sections hidden">
+      <!--// Back button //-->
+      <div class="btn-back"><i class="fa fa-chevron-left"></i> Vissza</div>
+      <!--// Arrows //-->
+      <div class="subsection-arrows">
+        <center>
+          <div class="btn-remote-circle btn-remote-circle-shows">
+            <div class="btn-enter btn-enter-shows"></div>
+            <div class="btn-arrow-up">
+              <i class="fa fa-chevron-up"></i>
+            </div>
+            <div class="btn-arrow-left-season btn-season-prev pull-left">
+              <i class="fa fa-chevron-left"></i>
+            </div>
+            <div class="btn-arrow-right-season btn-season-next pull-right">
+              <i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="btn-arrow-down">
+              <i class="fa fa-chevron-down"></i>
+            </div>
+          </div>
+        </center>
+      </div>
+      <center>
+        <select id="select-player-shows-container-contain" class="form-control"><option>Lejátszók</option></select>
+      </center>
+      <!--// Seen & Quality toggle //-->
+      <div class="subsection-favs-seen show-toggles">
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="btn-seen btn-seen-episode"><i class="fa fa-eye"></i></div>
+          </div>
+          <div class="col-xs-6">
+            <div class="btn-quality btn-quality-big btn-quality-episode"><i class="fa fa-toggle-on"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="row show-info">
+        <div class="col-xs-6">
+          <img class="show-info-poster" src="">
+        </div>
+        <div class="col-xs-6 show-info-main">
+          <span class="show-info-title">Cím</span><br/>
+          <span class="show-info-year">Év - Státusz</span><br/>
+          <span class="show-info-seasons">Évadok</span><br/>
+          <span class="show-info-rating">Értékelés</span>
+        </div>
+        <div class="col-xs-12 show-info-metadata">
+          <span class="show-info-genre"></span> &#149; 
+          <span class="show-info-runtime"></span> &#149; 
+          <span class="show-info-imdb"></span>
+          <div class="show-info-synopsis"></div>
+        </div>
+      </div>
+    </div>
+
+    <!--// SECTION:MOVIE-DETAIL //-->
+    <div id="movie-detail" class="sections hidden">
+      <!--// Back button //-->
+      <div class="btn-back"><i class="fa fa-chevron-left"></i> Vissza</div>
+      <!--// Play button over poster image //-->
+      <center>
+        <div class="movie-detail-poster">
+          <img src="">
+          <div class="movie-detail-play-button btn-play"><i class="fa fa-play movie-detail-play-inner"></i></div>
+        </div>
+      </center>
+      <div class="movie-detail-container">
+        <!--// Movie info //-->
+        <div class="movie-detail-sub">
+          <div class="movie-detail-title"></div>
+          <span class="movie-detail-year pull-left"></span>
+          <span class="movie-detail-rating pull-right"></span>
+        </div>
+        <div class="movie-detail-extra-info">
+          <span class="movie-detail-metadata movie-detail-genre">Műfaj</span> &#149; 
+          <span class="movie-detail-metadata movie-detail-runtime">0 perc</span> &#149; 
+          <span class="movie-detail-metadata movie-detail-imdblink"></span>
+        </div>
+        <!--// Synopsis div //-->
+        <div class="movie-detail-synopsis"></div>
+        <!--// Toggle quality button //-->
+        <div class="btn-quality"><i class="fa fa-toggle-on"></i> Minőség</div>
+        <!--// Watch trailer button //-->
+        <div class="btn-trailer"><i class="fa fa-film"></i> Előzetes</div>
+        <center>
+          <select id="select-subtitles-movie-detail" class="form-control"><option>Feliratok</option></select>
+          <select id="select-player-movie-detail" class="form-control"><option>Lejátszók</option></select>
+        </center>
+        <!--// Favourites & seen toggle //-->
+        <div class="subsection-favs-seen">
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="btn-seen"><i class="fa fa-eye"></i></div>
+            </div>
+            <div class="col-xs-6">
+              <div class="btn-favourite"><i class="fa fa-heart"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--// SECTION:DOWNLOADING //-->
+    <div id="downloading" class="sections hidden">
+      <!--// Back button //-->
+      <div class="btn-back"><i class="fa fa-chevron-left"></i> Vissza</div>
+      <!--// Downloading text //-->
+      <div class="downloading-text">
+        <h2>Letöltés...</h2>
+        <p>
+          A lejátszás hamarosan indul.
+        </p>
+      </div>
+    </div>
+
+    <!--// SECTION:LOADING //-->
+    <div id="loading" class="sections hidden">
+      <div class="loading-text">
+        <h3>Brokkoli Time kliens betöltése...</h3>
+      </div>
+    </div>
+
+    <!--// SECTION:STREAMER //-->
+    <div id="streamer" class="sections hidden">
+      <div class="btn-close-streamer"><i class="fa fa-chevron-left"></i> Lejátszó bezárása</div>
+      <video id="streamer-video" src="" autoplay="false" controls>
+        <source id="streamer-source" src="" type="video/mp4">
+      </video>
+      <div class="streamer-link"></div>
+    </div>
+
+    <!--// SECTION:SETTINGS-CLIENT //-->
+    <div id="settings-client" class="sections hidden">
+      <!--// Back button //-->
+      <div class="btn-back"><i class="fa fa-chevron-left"></i> Vissza</div>
+      <div class="settings-text">
+        <p>
+          A beállításokat nem tudod távolról megváltoztatni. :'(
+        </p>
+      </div>
+    </div>
+
+    <!--// SECTION:PLAYER //-->
+    <div id="player" class="sections hidden">
+      <!--// Back button //-->
+      <div class="btn-back"><i class="fa fa-chevron-left"></i> Vissza</div>
+      <!--// Info //-->
+      <div id="player-title"></div>
+      <div id="player-info"></div>
+      <img id="player-image" src="">
+      <div id="player-time" class="row">
+        <div id="player-current-time" class="col-xs-6 text-left"></div>
+        <div id="player-duration" class="col-xs-6 text-right"></div>
+      </div>
+      <div id="player-timeline">
+        <input type="range" id="seek-bar" value="0"/>
+      </div>
+      <!--// Player arrows //-->
+      <div class="subsection-arrows-player">
+        <center>
+          <div class="btn-remote-circle">
+            <div class="btn-pp"><i class="btn-pause fa fa-play"></i></div>
+            <div class="btn-arrow-up-player">
+              <i class="fa fa-volume-up"></i>
+            </div>
+            <div class="btn-arrow-left-player pull-left">
+              <i class="fa fa-backward"></i>
+            </div>
+            <div class="btn-arrow-right-player pull-right">
+              <i class="fa fa-forward"></i>
+            </div>
+            <div class="btn-arrow-down-player">
+              <i class="fa fa-volume-down"></i>
+            </div>
+          </div>
+        </center>
+      </div>
+      <div class="btn-mute"><i class="fa fa-volume-off"></i> Némítás be/ki</div>
+      <div class="btn-fullscreen"><i class="btn-fullscreen-child fa fa-expand"></i> Teljes képernyő</div>
+      <div class="btn-stream"><i class="fa fa-download"></i> Lejátszás itt!</div>
+      <center>
+        <select id="select-subtitles-player" class="form-control"><option>Feliratok</option></select>
+      </center>
+    </div>
+
+    <!--// SECTION:ABOUT //-->
+    <div id="about" class="sections hidden">
+      <!--// Back button //-->
+      <div class="btn-back"><i class="fa fa-chevron-left"></i> Vissza</div>
+      <!--// About text //-->
+      <div class="about-text">
+        <h3>Popcorn Time Remote</h3>
+        <p>
+          Developed by the Popcorn Time Remote Team.<br/>
+          Brokkoli Remote forked by Brokkoli Remote Team
+        </p>
+      </div>
+    </div>
+
+    <!--// SECTION:SETTINGS //-->
+    <div id="settings" class="sections hidden">
+      <div class="btn-close-settings pull-right"><i class="fa fa-close"></i></div>
+      <div class="welcome welcome-text" style="display: none;">
+        <div class="row">
+          <div class="col-xs-12">
+            <h2>Üdv a Brokkoli Remote appban!</h2>
+            <p>
+              Mielőtt irányíthatnod a Brokkoli Time kliensedet, be kell állítanod a kapcsolódási adatokat.<br/>
+              (Az adatokat a kliensed fejllett beállításaiban a Távirányítás résznél változtathatod meg.)
+            </p>
+            <hr>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <form id="form">
+            <label for="ip">Helyi IP cím</label>
+            <input id="ip" class="form-control" type="text" name="ip" value="" placeholder="localhost">
+            <label for="port">HTTP API Port</label>
+            <input id="port" class="form-control" type="number" name="port" value="" placeholder="8008">
+            <label for="username">HTTP API Felhasználónév</label>
+            <input id="username" class="form-control" type="text" name="username" value="" placeholder="popcorn">
+            <label for="password">HTTP API Jelszó</label>
+            <input id="password" class="form-control" type="password" name="password" value="" placeholder="popcorn">
+            <a class="btn-reload btn btn-default btn-naked pull-left" href="javascript:;" onclick="location.reload();">App újraindítása</a>
+            <a class="btn-save btn btn-primary pull-right" href="javascript:;">Mentés</a>
+            <div class="welcome welcome-button" style="display: none;">
+              <a class="btn-welcome btn btn-primary pull-right" href="javascript:;">Tovább</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/remote.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+    "name": "Brokkoli Remote",
+    "short_name": "Brokkoli Remote",
+    "theme_color": "#a00000",
+    "background_color": "#000000",
+    "display": "standalone",
+    "scope": "/brokkoli-remote/",
+    "start_url": "/brokkoli-remote/index.html",
+    "icons": [
+        {
+            "src": "img/icon-128x128.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        }
+    ]
+}
