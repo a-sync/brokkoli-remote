@@ -838,7 +838,7 @@ function setMediaInfo(response) {
 		$(".movie-detail-year").html("" + (response.result.year || "") + "");
 		$(".movie-detail-rating").html("" + (response.result.rating || "") + "/10");
 		$(".movie-detail-synopsis").html("<p>" + (response.result.synopsis || "") + "</p>");
-		$(".movie-detail-genre").html("" + (response.result.genre || "").replace(', ', ',').replace(',',', ') + "");
+		$(".movie-detail-genre").html("" + (response.result.genre || []).join(', ') + "");
 		//$(".movie-detail-runtime").html("" + response.result.runtime + " perc");
 		$(".movie-detail-imdblink").html('<a href="http://imdb.com/title/' + (response.result.imdb_id || "") + '/" target="_blank"><img src="img/imdb.png"></a>');
 		return true;
