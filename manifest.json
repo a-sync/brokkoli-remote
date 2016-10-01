@@ -4,6 +4,7 @@
     "theme_color": "#a00000",
     "background_color": "#000000",
     "display": "standalone",
+    ​​"orientation": "portrait",
     "scope": "/brokkoli-remote/",
     "start_url": "/brokkoli-remote/index.html",
     "icons": [

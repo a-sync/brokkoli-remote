@@ -1,5 +1,5 @@
 /*!
- * Brokkoli Remote v2.1.0.alpha
+ * Brokkoli Remote v2.1.1.alpha
  */
 /*! Make sure that we've got jQuery included. */
 if (typeof jQuery === "undefined") {
@@ -826,34 +826,34 @@ function setMediaInfo(response) {
 	}
 	else if (window.view == "player") {
 		$("#player-title").html("<h3>" + response.result.title + "</h3>");
-		$("#player-info").html("<p>" + response.result.synopsis + "</p>");
-		$("#player-image").attr("src", response.result.image);
+		$("#player-info").html("<p>" + (response.result.synopsis || "") + "</p>");
+		$("#player-image").attr("src", response.result.image || "");
 		return true;
 	}
 	else if (window.view == "movie-detail") {
-		$(".movie-detail-poster img").attr("src", response.result.image);
+		$(".movie-detail-poster img").attr("src", response.result.image || "");
 		$("body").addClass("backdrop");
-		$("body").attr("style", "background-image: url(" + response.result.backdrop + ");");
+		$("body").attr("style", "background-image: url(" + (response.result.backdrop || "") + ");");
 		$(".movie-detail-title").html("" + response.result.title + "");
-		$(".movie-detail-year").html("" + response.result.year + "");
-		$(".movie-detail-rating").html("" + response.result.rating + "/10");
-		$(".movie-detail-synopsis").html("<p>" + response.result.synopsis + "</p>");
-		$(".movie-detail-genre").html("" + response.result.genre + "");
+		$(".movie-detail-year").html("" + (response.result.year || "") + "");
+		$(".movie-detail-rating").html("" + (response.result.rating || "") + "/10");
+		$(".movie-detail-synopsis").html("<p>" + (response.result.synopsis || "") + "</p>");
+		$(".movie-detail-genre").html("" + (response.result.genre || "").replace(', ', ',').replace(',',', ') + "");
 		//$(".movie-detail-runtime").html("" + response.result.runtime + " perc");
-		$(".movie-detail-imdblink").html('<a href="http://imdb.com/title/' + response.result.imdb_id + '/" target="_blank"><img src="img/imdb.png"></a>');
+		$(".movie-detail-imdblink").html('<a href="http://imdb.com/title/' + (response.result.imdb_id || "") + '/" target="_blank"><img src="img/imdb.png"></a>');
 		return true;
 	}
 	else if (window.view == "shows-container-contain") {
 		$(".show-info-title").html("" + response.result.title + "");
-		$(".show-info-year").html("" + response.result.year + " - " + response.result.status + "");
+		$(".show-info-year").html("" + (response.result.year || "") + " - " + response.result.status + "");
 		$(".show-info-rating").html("" + parseFloat(response.result.rating.percentage) / 10 + "/10");
 		$(".show-info-seasons").html("" + response.result.num_seasons + " évad");
-		$(".show-info-genre").html("" + response.result.genres[0] + "");
+		$(".show-info-genre").html("" + (response.result.genres[0] || "") + "");
 		//$(".show-info-runtime").html("" + response.result.runtime + " perc");
 		$(".show-info-imdb").html('<a href="http://imdb.com/title/' + response.result.imdb_id + '/" target="_blank"><img src="img/imdb.png"></a>');
-		$(".show-info-poster").attr("src", "" + response.result.images.poster + "");
-		$(".show-info").attr("style", "background-image: url(" + response.result.images.fanart + ");");
-		$(".show-info-synopsis").html("<p>" + response.result.synopsis + "</p>");
+		$(".show-info-poster").attr("src", "" + (response.result.images.poster || "") + "");
+		$(".show-info").attr("style", "background-image: url(" + (response.result.images.fanart || "") + ");");
+		$(".show-info-synopsis").html("<p>" + (response.result.synopsis || "") + "</p>");
 		return true;
 	}
 	else if (window.view == "main-browser") {
@@ -898,7 +898,7 @@ function setPlayerInfo(response) {
 		$("#player-title").html('<h3>'+response.result.title+'</h3>');//<span class="pull-right"><a href="http://imdb.com/title/' + response.result.imdb_id + '/" target="_blank"><img src="img/imdb.png"></a></span>
         $("#player-current-time").text(formatSeconds(response.result.currentTime));
         $("#player-duration").text(formatSeconds(response.result.duration));
-        $("#player-info").addClass('row').html('<div class="col-xs-6 text-left"><i class="fa fa-toggle-on"></i> '+response.result.quality+'</div><div class="col-xs-6 text-right"><i class="fa fa-arrow-circle-down"></i> '+response.result.downloadSpeed+' &nbsp; <i class="fa fa-arrow-circle-up"></i> '+response.result.uploadSpeed+'</div>');
+        $("#player-info").addClass('row').html('<div class="col-xs-6 text-left"><i class="fa fa-toggle-on"></i> '+(response.result.quality || "")+'</div><div class="col-xs-6 text-right"><i class="fa fa-arrow-circle-down"></i> '+(response.result.downloadSpeed || "0")+' &nbsp; <i class="fa fa-arrow-circle-up"></i> '+(response.result.uploadSpeed || "0")+'</div>');
         
         window.streamCurrentTime = response.result.currentTime || window.streamCurrentTime || 0;
         window.streamDuration = response.result.duration || window.streamDuration || 100;
@@ -922,7 +922,7 @@ function setPlayerInfo(response) {
 $("#default").removeClass("hidden");
 
 /*! Set variables. */
-var version = "2.1.0";
+var version = "2.1.1";
 var versionTag = ".alpha";
 var supportedPopcorntimeVersions = ["1.0.11","1.0.10","1.0.9","1.0.8","1.0.7","1.0.6","1.0.5","1.0.4"];
 var ip;
