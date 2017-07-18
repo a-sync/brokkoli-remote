@@ -1,10 +1,83 @@
 /*!
- * Brokkoli Remote v2.1.2.alpha
+ * Brokkoli Remote
  */
 /*! Make sure that we've got jQuery included. */
 if (typeof jQuery === "undefined") {
 	throw new Error("Brokkoli Remote requires jQuery.");
 }
+
+/************!
+ * BOOTSTRAP
+ ************/
+
+/*! Show loading container. */
+$("#default").removeClass("hidden");
+
+/*! Set variables. */
+var version = "2.1.3";
+var versionTag = ".alpha";
+var supportedPopcorntimeVersions = ["1.0.14","1.0.13","1.0.12","1.0.11","1.0.10","1.0.9","1.0.8","1.0.7","1.0.6","1.0.5","1.0.4"];
+var ip;
+var port;
+var username;
+var password;
+var theme;
+var clientVersion;
+var connected = false;
+var debug = false;
+var view = "";
+var currentView = "";
+var currenttab = "";
+var langcodes = "";
+var getplayingInterval;
+var seekBar = 0;
+var streamCurrentTime = 0;
+var streamDuration = 100;
+var callTimeout = 3000;
+var downloadingInterval;
+$.getJSON("js/langcodes.json", function(json) {
+	window.langcodes = json;
+});
+
+/*! On document ready, call functions. */
+$(document).ready(function() {
+	if(debug) console.info("[INFO] Document is ready, starting Brokkoli Remote session.");
+	if(debug) console.info("[INFO] Brokkoli Remote version " + version + versionTag + ".");
+	if (firstSession()) {
+		// Show settings section and welcome div.
+		if(debug) console.info("[INFO] Starting in 'Welcome' mode.");
+		$(".btn-save").hide();
+		$(".btn-close-settings").hide();
+		showSection("settings");
+		$(".welcome").show();
+		$(".btn-welcome").click(function() {
+			window.localStorage.setItem("ip", $("#ip").val());
+			window.localStorage.setItem("port", $("#port").val());
+			window.localStorage.setItem("username", $("#username").val());
+			window.localStorage.setItem("password", $("#password").val());
+			//window.localStorage.setItem("theme", "dark");
+			reloadSettings();
+			popcorntimeConnect(true, true);
+			popcorntimeConnect(null, true);
+			setTimeout(function() {
+				if(debug) console.debug("[DEBUG] Connected status: " + window.connected);
+				if (window.connected == true) {
+					alert("Sikeres kapcsolat a Brokkoli Time klienssel!");
+					location.reload();
+				}
+			}, 500);
+		});
+	}
+	else {
+		loadSettings();
+		registerListeners();
+		popcorntimeConnect();
+
+		setTimeout(function() {
+			popcorntimeAPI("ping");
+		}, 500);
+	}
+});
 
 /************!
  * FUNCTIONS
@@ -913,76 +986,3 @@ function setPlayerInfo(response) {
 		return false;
 	}
 }
-
-/************!
- * BOOTSTRAP
- ************/
-
-/*! Show loading container. */
-$("#default").removeClass("hidden");
-
-/*! Set variables. */
-var version = "2.1.2";
-var versionTag = ".alpha";
-var supportedPopcorntimeVersions = ["1.0.13","1.0.12","1.0.11","1.0.10","1.0.9","1.0.8","1.0.7","1.0.6","1.0.5","1.0.4"];
-var ip;
-var port;
-var username;
-var password;
-var theme;
-var clientVersion;
-var connected = false;
-var debug = false;
-var view = "";
-var currentView = "";
-var currenttab = "";
-var langcodes = "";
-var getplayingInterval;
-var seekBar = 0;
-var streamCurrentTime = 0;
-var streamDuration = 100;
-var callTimeout = 3000;
-var downloadingInterval;
-$.getJSON("js/langcodes.json", function(json) {
-	window.langcodes = json;
-});
-
-/*! On document ready, call functions. */
-$(document).ready(function() {
-	if(debug) console.info("[INFO] Document is ready, starting Brokkoli Remote session.");
-	if(debug) console.info("[INFO] Brokkoli Remote version " + version + versionTag + ".");
-	if (firstSession()) {
-		// Show settings section and welcome div.
-		if(debug) console.info("[INFO] Starting in 'Welcome' mode.");
-		$(".btn-save").hide();
-		$(".btn-close-settings").hide();
-		showSection("settings");
-		$(".welcome").show();
-		$(".btn-welcome").click(function() {
-			window.localStorage.setItem("ip", $("#ip").val());
-			window.localStorage.setItem("port", $("#port").val());
-			window.localStorage.setItem("username", $("#username").val());
-			window.localStorage.setItem("password", $("#password").val());
-			//window.localStorage.setItem("theme", "dark");
-			reloadSettings();
-			popcorntimeConnect(true, true);
-			popcorntimeConnect(null, true);
-			setTimeout(function() {
-				if(debug) console.debug("[DEBUG] Connected status: " + window.connected);
-				if (window.connected == true) {
-					alert("Sikeres kapcsolat a Brokkoli Time klienssel!");
-					location.reload();
-				}
-			}, 500);
-		});
-	}
-	else {
-		loadSettings();
-		registerListeners();
-		popcorntimeConnect();
-
-		setTimeout(function() {
-			popcorntimeAPI("ping");
-		}, 500);
-	}
-});
