@@ -14,9 +14,9 @@ if (typeof jQuery === "undefined") {
 $("#default").removeClass("hidden");
 
 /*! Set variables. */
-var version = "2.1.4";
+var version = "2.1.5";
 var versionTag = ".alpha";
-var supportedPopcorntimeVersions = ["1.0.15","1.0.14","1.0.13","1.0.12","1.0.11","1.0.10","1.0.9","1.0.8","1.0.7","1.0.6","1.0.5","1.0.4"];
+var supportedPopcorntimeVersions = ["1.0.16","1.0.15","1.0.14","1.0.13","1.0.12","1.0.11","1.0.10","1.0.9","1.0.8","1.0.7","1.0.6","1.0.5","1.0.4"];
 var ip;
 var port;
 var username;
@@ -46,15 +46,29 @@ $(document).ready(function() {
 	if (firstSession()) {
 		// Show settings section and welcome div.
 		if(debug) console.info("[INFO] Starting in 'Welcome' mode.");
+
+		loadSettings(true);
 		$(".btn-save").hide();
 		$(".btn-close-settings").hide();
 		showSection("settings");
 		$(".welcome").show();
 		$(".btn-welcome").click(function() {
-			window.localStorage.setItem("ip", $("#ip").val());
-			window.localStorage.setItem("port", $("#port").val());
-			window.localStorage.setItem("username", $("#username").val());
-			window.localStorage.setItem("password", $("#password").val());
+			if ($("#ip").val()) {
+                window.localStorage.setItem("ip", $("#ip").val());
+			}
+
+			if ($("#port").val()) {
+                window.localStorage.setItem("port", $("#port").val());
+			}
+
+			if ($("#username").val()) {
+                window.localStorage.setItem("username", $("#username").val());
+			}
+
+			if ($("#password").val()) {
+                window.localStorage.setItem("password", $("#password").val());
+			}
+
 			//window.localStorage.setItem("theme", "dark");
 			reloadSettings();
 			popcorntimeConnect(true, true);
@@ -489,12 +503,12 @@ function viewStackHandler(data) {
  *
  * @returns {void}
  */
-function loadSettings() {
+function loadSettings(skipInputs) {
 	// Check if the settings exist. If not, create them with default settings.
-	if (!localStorageExists("ip") || window.localStorage.getItem("ip") == "") {
+	if (!localStorageExists("ip") || !window.localStorage.getItem("ip")) {
 		window.localStorage.setItem("ip", "localhost");
 	}
-	if (!localStorageExists("port") || window.localStorage.getItem("port") == "") {
+	if (!localStorageExists("port") || !window.localStorage.getItem("port")) {
 		window.localStorage.setItem("port", "8008");
 	}
 	if (!localStorageExists("username")) {
@@ -507,12 +521,14 @@ function loadSettings() {
 		window.localStorage.setItem("theme", "dark");
 	}*/
 
-	// Load the settings into the HTML form.
-	$("#ip").val(window.localStorage.getItem("ip"));
-	$("#port").val(window.localStorage.getItem("port"));
-	$("#username").val(window.localStorage.getItem("username"));
-	$("#password").val(window.localStorage.getItem("password"));
-	//$("#" + window.localStorage.getItem("theme")).prop("checked", true);
+    if (!skipInputs) {
+        // Load the settings into the HTML form.
+        $("#ip").val(window.localStorage.getItem("ip"));
+        $("#port").val(window.localStorage.getItem("port"));
+        $("#username").val(window.localStorage.getItem("username"));
+        $("#password").val(window.localStorage.getItem("password"));
+        //$("#" + window.localStorage.getItem("theme")).prop("checked", true);
+	}
 	//switchTheme(window.localStorage.getItem("theme"));
 
 	// Set the global setting variables.
@@ -868,12 +884,7 @@ function registerListener(selector, handlerType, popcorntimeAPImethod, refreshVi
  * @private
  */
 function localStorageExists(key) {
-	if (window.localStorage.getItem(key) != null) {
-		return true;
-	}
-	else {
-		return false;
-	}
+	return (window.localStorage.getItem(key) !== null);
 }
 
 /*!

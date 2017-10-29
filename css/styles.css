@@ -618,3 +618,7 @@ noscript p {
 #debug-cmd-args {
   width: 50%;
 }
+
+.btn-anime {
+  display: none;
+}
