@@ -620,5 +620,5 @@ noscript p {
 }
 
 .btn-anime {
-  display: none;
+  display: none !important;
 }
